@@ -8,9 +8,27 @@
 </head>
 
 <body>
+    <main>
+        <section>
+            <form id="users_form">
+                <label for="users_input">Enter users:</label>
+                <input id="users_input" name="users_input" required />
+                <button id="users_submit" type="submit">Submit</button>
+            </form>
+        </section>
+        <section>
+            <table id="users_table">
+                <tr>
+                    <th>Username</th>
+                    <th>Clan</th>
+                    <th>Score</th>
+                </tr>
 
+            </table>
+        </section>
+    </main>
 </body>
 
-<script src="index.mjs" type="module"></script>
+<script src="app.mjs" type="module"></script>
 
 </html>
