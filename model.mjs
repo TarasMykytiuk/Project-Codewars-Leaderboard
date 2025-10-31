@@ -7,15 +7,20 @@ export class Model {
         }
         this.not_found_users = [];
         this.languages = new Set();
+        this.errors = [];
     }
 
     async readUsers(input_str) {
-        this.users_names = input_str.split(",");
+        this.users_names = [];
         this.not_found_users = [];
-        await this.fetchAllUsers();
+        this.users_names = input_str.split(",");
+        await this.fetchUsers();
     }
 
-    async fetchAllUsers() {
+    async fetchUsers() {
+        this.users_data = {};
+        this.languages = new Set();
+        this.errors = [];
         for (const user_name of this.users_names) {
             const user_data = await this.fetchUser(user_name);
             if (Object.keys(user_data).length != 0) {
@@ -31,14 +36,15 @@ export class Model {
         const api_url = this.api_list.get_user + user_name;
         try {
             const response = await fetch(api_url);
-            if (response.status != 404) {
+            if (response.ok) {
                 const data = await response.json();
                 return data;
             } else {
-                return {};
+                if (response.status == 404) throw new Error("User not found");
             }
         } catch (error) {
-            console.log(error);
+            this.errors.push(error + " - " + api_url);
+            return {};
         }
     }
 

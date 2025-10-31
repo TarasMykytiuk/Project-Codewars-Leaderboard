@@ -22,3 +22,22 @@ section {
     margin: 20px auto;
     text-align: center;
 }
+
+#users_table_body tr:nth-child(2) {
+    color: blue;
+}
+
+table,
+th,
+td {
+    border: 1px solid;
+}
+
+#errors {
+    color: red;
+    font-size: small;
+}
+
+#errors p {
+    margin: 0;
+}

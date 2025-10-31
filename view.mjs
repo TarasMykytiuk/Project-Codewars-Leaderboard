@@ -4,8 +4,9 @@ export class View {
             usrSubmit: document.getElementById("users_submit"),
             usrInput: document.getElementById("users_input"),
             langSelect: document.getElementById("lang-selector"),
-            usrTable: document.getElementById("users_table"),
-            notFound: document.getElementById("not_found_users")
+            usrTable: document.getElementById("users_table_body"),
+            notFound: document.getElementById("not_found_users"),
+            errors: document.getElementById("errors")
         };
     }
     clearTable() {
@@ -32,11 +33,30 @@ export class View {
         this.elements.usrTable.appendChild(row);
     }
 
+    populateTable(tableData) {
+        this.clearTable();
+        tableData.forEach((user) => {
+            this.displayUserRow(user.name, user.clan, user.score);
+        });
+    }
+
     displayNotFoundUsers(users) {
         this.elements.notFound.innerText = "For names: " + users.join(", ") + " - no users found!";
     }
 
+    displayErrors(errors) {
+        this.elements.errors.innerHTML = '';
+        errors.forEach(error => {
+            const errorDom = document.createElement("p");
+            errorDom.innerText = error;
+            this.elements.errors.appendChild(errorDom);
+        });
+    }
+
     populateLangSelect(languages) {
+        while (this.elements.langSelect.children.length > 1) {
+            this.elements.langSelect.removeChild(this.elements.langSelect.lastChild);
+        }
         languages.forEach(lang => this.addSelectOption(lang));
     }
 

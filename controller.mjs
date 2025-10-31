@@ -3,6 +3,7 @@ export class Controller {
         this.view = view;
         this.model = model;
     }
+
     init() {
         this.view.elements.usrSubmit.addEventListener("click", (event) => {
             event.preventDefault();
@@ -19,24 +20,19 @@ export class Controller {
 
         this.view.populateLangSelect(this.model.languages);
 
-        this.resetTable("overall");
+        this.view.populateTable(this.model.getSortedTableData("overall"));
 
         if (this.model.not_found_users.length != 0) {
             this.view.displayNotFoundUsers(this.model.not_found_users);
         }
-    }
-
-    resetTable(lang) {
-        this.view.clearTable();
-        const tableData = this.model.getSortedTableData(lang);
-        const userData = this.model.users_data;
-        tableData.forEach((user) => {
-            this.view.displayUserRow(user.name, user.clan, user.score);
-        });
+        if (this.model.errors.length != 0) {
+            this.view.displayErrors(this.model.errors);
+        }
     }
 
     handleLangSelect() {
         const lang = this.view.elements.langSelect.value;
-        this.resetTable(lang);
+        const tableData = this.model.getSortedTableData(lang);
+        this.view.populateTable(tableData);
     }
 }
