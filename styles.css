@@ -1,0 +1,24 @@
+section {
+    width: 60%;
+    margin: 20px auto;
+}
+
+#users_form {
+    display: flex;
+    justify-content: space-between;
+}
+
+#users_form input {
+    width: 70%;
+}
+
+#language-selector-container {
+    display: flex;
+}
+
+#users_table,
+#not_found_users {
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+}

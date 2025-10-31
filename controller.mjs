@@ -8,14 +8,35 @@ export class Controller {
             event.preventDefault();
             this.handleUsersSubmit();
         });
+        this.view.elements.langSelect.addEventListener("change", (event) => {
+            this.handleLangSelect();
+        })
     }
+
     async handleUsersSubmit() {
-        this.view.clearTable();
         const users_str = this.view.elements.usrInput.value.replaceAll(" ", "");
-        this.model.readUsers(users_str);
-        await this.model.fetchAllUsers();
-        for (const user_name in this.model.users_data) {
-            this.view.displayUserRow(this.model.users_data[user_name]);
+        await this.model.readUsers(users_str);
+
+        this.view.populateLangSelect(this.model.languages);
+
+        this.resetTable("overall");
+
+        if (this.model.not_found_users.length != 0) {
+            this.view.displayNotFoundUsers(this.model.not_found_users);
         }
+    }
+
+    resetTable(lang) {
+        this.view.clearTable();
+        const tableData = this.model.getSortedTableData(lang);
+        const userData = this.model.users_data;
+        tableData.forEach((user) => {
+            this.view.displayUserRow(user.name, user.clan, user.score);
+        });
+    }
+
+    handleLangSelect() {
+        const lang = this.view.elements.langSelect.value;
+        this.resetTable(lang);
     }
 }

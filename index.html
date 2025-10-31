@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" />
     <title>Codewars leaderboard</title>
 </head>
 
@@ -17,14 +18,20 @@
             </form>
         </section>
         <section>
+            <div id="lang-selector-container">
+                <label for="lang-selector">Language:</label>
+                <select id="lang-selector" name="lang-selector">
+                    <option value="overall">overall</option>
+                </select>
+            </div>
             <table id="users_table">
                 <tr>
                     <th>Username</th>
                     <th>Clan</th>
                     <th>Score</th>
                 </tr>
-
             </table>
+            <div id="not_found_users"></div>
         </section>
     </main>
 </body>
