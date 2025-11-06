@@ -5,13 +5,9 @@ export class Controller {
     }
 
     init() {
-        this.view.elements.usrSubmit.addEventListener("click", (event) => {
-            event.preventDefault();
-            this.handleUsersSubmit();
-        });
-        this.view.elements.langSelect.addEventListener("change", (event) => {
-            this.handleLangSelect();
-        })
+
+        this.view.bindUserSubmit(() => this.handleUsersSubmit());
+        this.view.bindLangSelect(() => this.handleLangSelect());
     }
 
     async handleUsersSubmit() {

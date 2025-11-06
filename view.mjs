@@ -9,6 +9,20 @@ export class View {
             errors: document.getElementById("errors")
         };
     }
+
+    bindUserSubmit(handler) {
+        this.elements.usrSubmit.addEventListener("click", (event) => {
+            event.preventDefault();
+            handler();
+        });
+    }
+
+    bindLangSelect(handler) {
+        this.elements.langSelect.addEventListener("change", (event) => {
+            handler();
+        });
+    }
+
     clearTable() {
         let rows = Array.from(this.elements.usrTable.getElementsByClassName("user_row"));
         if (rows.length) {
