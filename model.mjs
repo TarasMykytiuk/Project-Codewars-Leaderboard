@@ -21,13 +21,13 @@ export class Model {
         this.usersData = {};
         this.languages = new Set();
         this.errors = [];
-        for (const user_name of this.usersNames) {
-            const user_data = await this.fetchUser(user_name);
-            if (Object.keys(user_data).length != 0) {
-                this.usersData[user_name] = user_data;
-                Object.keys(user_data.ranks.languages).forEach(element => this.languages.add(element));
+        for (const userName of this.usersNames) {
+            const userData = await this.fetchUser(userName);
+            if (Object.keys(userData).length != 0) {
+                this.usersData[userName] = userData;
+                Object.keys(userData.ranks.languages).forEach(element => this.languages.add(element));
             } else {
-                this.notFoundUsers.push(user_name);
+                this.notFoundUsers.push(userName);
             }
         }
     }
