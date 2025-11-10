@@ -1,41 +1,41 @@
 export class Model {
     constructor() {
-        this.users_names = [];
-        this.users_data = {};
-        this.api_list = {
-            get_user: "https://www.codewars.com/api/v1/users/"
+        this.usersNames = [];
+        this.usersData = {};
+        this.apiList = {
+            getUser: "https://www.codewars.com/api/v1/users/"
         }
-        this.not_found_users = [];
+        this.notFoundUsers = [];
         this.languages = new Set();
         this.errors = [];
     }
 
-    async readUsers(input_str) {
-        this.users_names = [];
-        this.not_found_users = [];
-        this.users_names = input_str.split(",");
+    async readUsers(inputStr) {
+        this.usersNames = [];
+        this.notFoundUsers = [];
+        this.usersNames = inputStr.split(",");
         await this.fetchUsers();
     }
 
     async fetchUsers() {
-        this.users_data = {};
+        this.usersData = {};
         this.languages = new Set();
         this.errors = [];
-        for (const user_name of this.users_names) {
+        for (const user_name of this.usersNames) {
             const user_data = await this.fetchUser(user_name);
             if (Object.keys(user_data).length != 0) {
-                this.users_data[user_name] = user_data;
+                this.usersData[user_name] = user_data;
                 Object.keys(user_data.ranks.languages).forEach(element => this.languages.add(element));
             } else {
-                this.not_found_users.push(user_name);
+                this.notFoundUsers.push(user_name);
             }
         }
     }
 
-    async fetchUser(user_name) {
-        const api_url = this.api_list.get_user + user_name;
+    async fetchUser(userName) {
+        const apiUrl = this.apiList.getUser + userName;
         try {
-            const response = await fetch(api_url);
+            const response = await fetch(apiUrl);
             if (response.ok) {
                 const data = await response.json();
                 return data;
@@ -43,13 +43,13 @@ export class Model {
                 if (response.status == 404) throw new Error("User not found");
             }
         } catch (error) {
-            this.errors.push(error + " - " + api_url);
+            this.errors.push(error + " - " + apiUrl);
             return {};
         }
     }
 
     getSortedTableData(lang) {
-        let sortable = Object.entries(this.users_data);
+        let sortable = Object.entries(this.usersData);
         const sortedData = [];
         if (lang == "overall") {
             sortable.sort((a, b) => b[1].ranks.overall.score - a[1].ranks.overall.score);

@@ -11,15 +11,15 @@ export class Controller {
     }
 
     async handleUsersSubmit() {
-        const users_str = this.view.elements.usrInput.value.replaceAll(" ", "");
-        await this.model.readUsers(users_str);
+        const usersStr = this.view.elements.usrInput.value.replaceAll(" ", "");
+        await this.model.readUsers(usersStr);
 
         this.view.populateLangSelect(this.model.languages);
 
         this.view.populateTable(this.model.getSortedTableData("overall"));
 
-        if (this.model.not_found_users.length != 0) {
-            this.view.displayNotFoundUsers(this.model.not_found_users);
+        if (this.model.notFoundUsers.length != 0) {
+            this.view.displayNotFoundUsers(this.model.notFoundUsers);
         }
         if (this.model.errors.length != 0) {
             this.view.displayErrors(this.model.errors);

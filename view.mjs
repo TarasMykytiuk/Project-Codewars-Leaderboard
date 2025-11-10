@@ -32,18 +32,18 @@ export class View {
         }
     }
 
-    displayUserRow(user_name, clan, score) {
+    displayUserRow(userName, clan, score) {
         const row = document.createElement("tr");
         row.classList.add("user_row");
-        const user_name_dom = document.createElement("td");
-        user_name_dom.innerText = user_name;
-        const user_clan_dom = document.createElement("td");
-        user_clan_dom.innerText = clan;
-        const user_score_dom = document.createElement("td");
-        user_score_dom.innerText = score;
-        row.appendChild(user_name_dom);
-        row.appendChild(user_clan_dom);
-        row.appendChild(user_score_dom);
+        const userNameDom = document.createElement("td");
+        userNameDom.innerText = userName;
+        const userClanDom = document.createElement("td");
+        userClanDom.innerText = clan;
+        const userScoreDom = document.createElement("td");
+        userScoreDom.innerText = score;
+        row.appendChild(userNameDom);
+        row.appendChild(userClanDom);
+        row.appendChild(userScoreDom);
         this.elements.usrTable.appendChild(row);
     }
 
