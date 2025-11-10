@@ -50,21 +50,20 @@ export class Model {
 
     getSortedTableData(lang) {
         let sortable = Object.entries(this.usersData);
-        if (lang == "overall") {
-            return sortable.sort((a, b) => b[1].ranks.overall.score - a[1].ranks.overall.score)
-                .map(element => element = {
-                    name: element[0],
-                    clan: element[1].clan,
-                    score: element[1].ranks.overall.score
-                });
-        } else {
-            return sortable.filter((element) => element[1].ranks.languages.hasOwnProperty(lang))
-                .sort((a, b) => b[1].ranks.languages[lang].score - a[1].ranks.languages[lang].score)
-                .map(element => element = {
-                    name: element[0],
-                    clan: element[1].clan,
-                    score: element[1].ranks.languages[lang].score
-                });
-        }
+        return sortable.filter(([username, data]) => {
+            return lang === "overall" || data.ranks?.languages?.[lang] !== undefined;
+        })
+            .sort(([usernameA, dataA], [usernameB, dataB]) => {
+                return this.getUserScore(lang, dataB) - this.getUserScore(lang, dataA);
+            })
+            .map(([username, data]) => ({
+                name: username,
+                clan: data.clan,
+                score: this.getUserScore(lang, data)
+            }));
+    }
+
+    getUserScore(lang, data) {
+        return lang === "overall" ? data.ranks.overall.score : data.ranks?.languages?.[lang]?.score;
     }
 }
