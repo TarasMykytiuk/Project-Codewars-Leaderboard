@@ -22,7 +22,7 @@ export class Controller {
             this.view.displayNotFoundUsers(this.model.notFoundUsers);
         }
         if (this.model.errors.length != 0) {
-            this.view.displayErrors(this.model.errors);
+            this.view.logErrors(this.model.errors);
         }
     }
 

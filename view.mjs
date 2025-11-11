@@ -5,8 +5,7 @@ export class View {
             usrInput: document.getElementById("users_input"),
             langSelect: document.getElementById("lang-selector"),
             usrTable: document.getElementById("users_table_body"),
-            notFound: document.getElementById("not_found_users"),
-            errors: document.getElementById("errors")
+            notFound: document.getElementById("not_found_users")
         };
     }
 
@@ -55,16 +54,12 @@ export class View {
     }
 
     displayNotFoundUsers(users) {
-        this.elements.notFound.innerText = "For names: " + users.join(", ") + " - no users found!";
+        const stringStart = users.length > 1 ? "Users: " : "User: "
+        this.elements.notFound.innerText = stringStart + users.join(", ") + " - not found!";
     }
 
-    displayErrors(errors) {
-        this.elements.errors.innerHTML = '';
-        errors.forEach(error => {
-            const errorDom = document.createElement("p");
-            errorDom.innerText = error;
-            this.elements.errors.appendChild(errorDom);
-        });
+    logErrors(errors) {
+        errors.forEach(error => console.log(error));
     }
 
     populateLangSelect(languages) {
