@@ -32,12 +32,3 @@ th,
 td {
     border: 1px solid;
 }
-
-#errors {
-    color: red;
-    font-size: small;
-}
-
-#errors p {
-    margin: 0;
-}
