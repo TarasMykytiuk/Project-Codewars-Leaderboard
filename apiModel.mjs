@@ -18,15 +18,4 @@ export class ApiModel {
             return { error: error + " - " + apiUrl };
         }
     }
-
-    async fetchUsers(usersNames) {
-        const fetchedData = {};
-        for (const userName of usersNames) {
-            const fetchResult = await this.fetchUser(userName);
-            if (Object.keys(fetchResult).length != 0) {
-                fetchedData[userName] = fetchResult;
-            }
-        }
-        return fetchedData;
-    }
 }

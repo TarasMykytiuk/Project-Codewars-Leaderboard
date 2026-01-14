@@ -1,6 +1,7 @@
 export class View {
+    #elements
     constructor() {
-        this.elements = {
+        this.#elements = {
             usrSubmit: document.getElementById("users_submit"),
             usrInput: document.getElementById("users_input"),
             langSelect: document.getElementById("lang-selector"),
@@ -10,20 +11,22 @@ export class View {
     }
 
     bindUserSubmit(handler) {
-        this.elements.usrSubmit.addEventListener("click", (event) => {
+        const usersStr = this.#elements.usrInput.value.replaceAll(" ", "");
+        this.#elements.usrSubmit.addEventListener("click", (event) => {
             event.preventDefault();
-            handler();
+            handler(usersStr);
         });
     }
 
     bindLangSelect(handler) {
-        this.elements.langSelect.addEventListener("change", (event) => {
-            handler();
+        this.#elements.langSelect.addEventListener("change", (event) => {
+            const lang = this.#elements.langSelect.value;
+            handler(lang);
         });
     }
 
     clearTable() {
-        let rows = Array.from(this.elements.usrTable.getElementsByClassName("user_row"));
+        let rows = Array.from(this.#elements.usrTable.getElementsByClassName("user_row"));
         if (rows.length) {
             for (const row of rows) {
                 row.remove();
@@ -43,7 +46,7 @@ export class View {
         row.appendChild(userNameDom);
         row.appendChild(userClanDom);
         row.appendChild(userScoreDom);
-        this.elements.usrTable.appendChild(row);
+        this.#elements.usrTable.appendChild(row);
     }
 
     populateTable(tableData) {
@@ -55,7 +58,7 @@ export class View {
 
     displayNotFoundUsers(users) {
         const stringStart = users.length > 1 ? "Users: " : "User: "
-        this.elements.notFound.innerText = stringStart + users.join(", ") + " - not found!";
+        this.#elements.notFound.innerText = stringStart + users.join(", ") + " - not found!";
     }
 
     logErrors(errors) {
@@ -63,8 +66,8 @@ export class View {
     }
 
     populateLangSelect(languages) {
-        while (this.elements.langSelect.children.length > 1) {
-            this.elements.langSelect.removeChild(this.elements.langSelect.lastChild);
+        while (this.#elements.langSelect.children.length > 1) {
+            this.#elements.langSelect.removeChild(this.#elements.langSelect.lastChild);
         }
         languages.forEach(lang => this.addSelectOption(lang));
     }
@@ -73,6 +76,6 @@ export class View {
         const option = document.createElement("option");
         option.value = value;
         option.innerText = value;
-        this.elements.langSelect.appendChild(option);
+        this.#elements.langSelect.appendChild(option);
     }
 }

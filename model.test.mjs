@@ -32,21 +32,24 @@ const mockData = {
         }
     }
 }
-model.processData(mockData);
+const sortable = Object.entries(mockData);
+for (const [userName, data] of sortable) {
+    model.addUser(userName, data);
+}
 
 test("not found users have to be stored in according models property", () => {
     const expectedNotFound = ['notExist'];
-    assert.deepStrictEqual(model.notFoundUsers, expectedNotFound);
+    assert.deepStrictEqual(model.getNotFoundUsers(), expectedNotFound);
 });
 
 test("errors have to be stored in according property of the model", () => {
     const expectedError = ["Error: User not found - https://www.codewars.com/api/v1/users/notExist"];
-    assert.deepStrictEqual(model.errors, expectedError);
+    assert.deepStrictEqual(model.getErrors(), expectedError);
 });
 
 test("all ranking languages for fetched users must be stored in according property of the model", () => {
     const expectedLanguages = new Set(["javascript", "sql", "go", "ruby"]);
-    assert.deepStrictEqual(model.languages, expectedLanguages);
+    assert.deepStrictEqual(model.getLanguages(), expectedLanguages);
 })
 
 test("Users that have selected ranking option must be sorted in descending order", () => {

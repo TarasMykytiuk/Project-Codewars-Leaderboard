@@ -6,28 +6,27 @@ export class Controller {
     }
 
     init() {
-        this.view.bindUserSubmit(() => this.handleUsersSubmit());
-        this.view.bindLangSelect(() => this.handleLangSelect());
+        this.view.bindUserSubmit((usersStr) => this.handleUsersSubmit(usersStr));
+        this.view.bindLangSelect((lang) => this.handleLangSelect(lang));
     }
 
-    async handleUsersSubmit() {
+    async handleUsersSubmit(usersStr) {
         this.model.clearData();
-        const usersStr = this.view.elements.usrInput.value.replaceAll(" ", "");
-        const fetchedData = await this.apiModel.fetchUsers(usersStr.split(","));
-        this.model.processData(fetchedData);
-
-        this.view.populateLangSelect(this.model.languages);
-        this.view.populateTable(this.model.getSortedTableData("overall"));
-        if (this.model.notFoundUsers.length != 0) {
-            this.view.displayNotFoundUsers(this.model.notFoundUsers);
+        for (const userName of usersStr.split(",")) {
+            const data = await this.apiModel.fetchUser(userName);
+            this.model.addUser(userName, data);
         }
-        if (this.model.errors.length != 0) {
-            this.view.logErrors(this.model.errors);
+        this.view.populateLangSelect(this.model.getLanguages());
+        this.view.populateTable(this.model.getSortedTableData("overall"));
+        if (this.model.getNotFoundUsers().length != 0) {
+            this.view.displayNotFoundUsers(this.model.getNotFoundUsers());
+        }
+        if (this.model.getErrors().length != 0) {
+            this.view.logErrors(this.model.getErrors());
         }
     }
 
-    handleLangSelect() {
-        const lang = this.view.elements.langSelect.value;
+    handleLangSelect(lang) {
         const tableData = this.model.getSortedTableData(lang);
         this.view.populateTable(tableData);
     }
