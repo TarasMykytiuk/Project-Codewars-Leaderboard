@@ -10,7 +10,7 @@ export class ApiModel {
         try {
             const response = await fetch(apiUrl, {
                 headers: {
-                    'Access-Control-Allow-Origin': 'https://www.codewars.com',
+                    'Access-Control-Allow-Origin': '*',
                 }
             });
             if (response.ok) {
