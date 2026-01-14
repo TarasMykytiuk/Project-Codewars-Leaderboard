@@ -8,7 +8,11 @@ export class ApiModel {
     async fetchUser(userName) {
         const apiUrl = this.apiList.getUser + userName;
         try {
-            const response = await fetch(apiUrl);
+            const response = await fetch(apiUrl, {
+                headers: {
+                    'Access-Control-Allow-Origin': 'https://www.codewars.com',
+                }
+            });
             if (response.ok) {
                 return await response.json();
             } else {
